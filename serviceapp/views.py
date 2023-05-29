@@ -13,7 +13,7 @@ from django.views.decorators.csrf import csrf_exempt
 class VideoCamera(object):
 
     def __init__(self):
-        self.video = cv2.VideoCapture('http://192.168.31.225:8080/video')
+        self.video = cv2.VideoCapture('http://192.168.103.62:8080/video')
         # self.video = cv2.VideoCapture(0)
         # (self.grabbed, self.frame) = self.video.read()
         # threading.Thread(target=self.update, args=()).start()
@@ -26,11 +26,11 @@ class VideoCamera(object):
 
     def get_frame(self):
         grabbed, image = self.video.read()
-        if self.timer.elapseTime() >= 10 and not self.access:
+        image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        if self.timer.elapseTime() >= 10:
             self.access = facecatch(image)
             self.timer.restart()
-            highlightFaces(image, self.access)
-        # else: highlightFaces(image, self.access)
+        if self.access is not None: highlightFaces(image, self.access)
         _, jpeg = cv2.imencode('.jpg', image)
         return jpeg.tobytes()
 

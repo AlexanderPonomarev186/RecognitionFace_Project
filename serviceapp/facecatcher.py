@@ -16,25 +16,25 @@ def facecatch(image):
 
 
 def highlightFaces(frame, userAccess):
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
     length0 = frame.shape[1]
     length1 = frame.shape[0]
-
-    faces = faceCascade.detectMultiScale(
-        gray,
-        scaleFactor=1.1,
-        minNeighbors=5,
-        minSize=(30, 30)
-    )
-
-    for (x, y, w, h) in faces:
-        if userAccess:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 1)
-        elif userAccess is None:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 1)
-        else:
-            cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 1)
+    #
+    # faces = faceCascade.detectMultiScale(
+    #     gray,
+    #     scaleFactor=1.1,
+    #     minNeighbors=5,
+    #     minSize=(30, 30)
+    # )
+    #
+    # for (x, y, w, h) in faces:
+    #     if userAccess:
+    #         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 1)
+    #     elif userAccess is None:
+    #         cv2.rectangle(frame, (x, y), (x + w, y + h), (255, 0, 255), 1)
+    #     else:
+    #         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 0, 255), 1)
 
     if userAccess:
         cv2.rectangle(frame, (0, length1 - 80), (length0 - 1, length1 - 1), (0, 255, 0), -1)  # 7
