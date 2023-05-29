@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script
+  src="https://code.jquery.com/jquery-3.6.3.js"
+  integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM="
+  crossorigin="anonymous">
+</script>
+    <title>Title</title>
+</head>
+<body>
+<script>
+    let busy = false;
+    setInterval( function() {
+        if (busy) {  }
+        busy = true
+        $.ajax({
+        url: "works/",
+        type: "get",
+        success: function(data) {
+            $("#ajaxinjectimage").html(data);
+            console.log(data)
+            busy = false;
+        },
+        error: function(){
+            clearInterval(1)
+        }
+    });
+}, 10000);
+</script>
+{#    <h1>Camera</h1>#}
+{#    <img src="http://127.0.0.1:8000/camera/">#}
+    <div class="ajaxinjectimage">
+
+    </div>
+</body>
+</html>
