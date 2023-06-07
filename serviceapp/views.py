@@ -1,21 +1,21 @@
 from django.views.decorators import gzip
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import StreamingHttpResponse, JsonResponse, HttpResponse
 import cv2
 import numpy
-import pdb
 from serviceapp.timer import Timer
 from PIL import Image
-from serviceapp.facecatcher import facecatch, highlightFaces
+from serviceapp.facecatcher import facecatch, highlightFaces, rewindEmbeddings
 from django.views.decorators.csrf import csrf_exempt
+from serviceapp.models import Person
 
 
 class VideoCamera(object):
 
     def __init__(self):
-        self.video = cv2.VideoCapture('http://192.168.103.62:8080/video')
-        # self.video = cv2.VideoCapture(0)
-        # (self.grabbed, self.frame) = self.video.read()
+        # self.video = cv2.VideoCapture('http://192.168.103.62:8080/video')
+        self.video = cv2.VideoCapture(0)
+        (self.grabbed, self.frame) = self.video.read()
         # threading.Thread(target=self.update, args=()).start()
         self.timer = Timer()
         self.timer.start()
@@ -26,7 +26,7 @@ class VideoCamera(object):
 
     def get_frame(self):
         grabbed, image = self.video.read()
-        image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
+        # image = cv2.rotate(image, cv2.ROTATE_90_COUNTERCLOCKWISE)
         if self.timer.elapseTime() >= 10:
             self.access = facecatch(image)
             self.timer.restart()
@@ -87,3 +87,15 @@ def checkFace(request):
     final = numpy.array(img)
     response = facecatch(final)
     return JsonResponse({"access":response})
+
+def database(request):
+    context = {"persons":Person.objects.all()}
+    return render(request, "databasePage.html", context)
+
+
+def rewinddatabase(request):
+    rewindEmbeddings()
+    persons = Person.objects.all()
+    for person in persons:
+        Person.objects.filter(name=person.name).update(isactive=True)
+    return redirect('/database')

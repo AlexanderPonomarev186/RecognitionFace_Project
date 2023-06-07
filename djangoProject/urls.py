@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from serviceapp import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -24,5 +26,7 @@ urlpatterns = [
     path("camerapage/", views.cameraPage),
     path("camerapage/works/", views.works),
     path("phonecamera/", views.phoneCamera),
-    path("phonecamera/checkface/", views.checkFace)
-]
+    path("phonecamera/checkface/", views.checkFace),
+    path("database/", views.database),
+    path("rewinddatabase/", views.rewinddatabase)
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

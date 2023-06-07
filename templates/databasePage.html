@@ -15,41 +15,27 @@
     <link href="https://fonts.googleapis.com/css2?family=Raleway&family=Roboto&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     {% load static %}
-    <link rel="stylesheet" href="{% static 'css/camera.css' %}">
-    <title>Title</title>
+    <link rel="stylesheet" href="{% static 'css/database.css' %}">
 </head>
 <body>
-{#<script>#}
-{#    let busy = false;#}
-{#    setInterval( function() {#}
-{#        if (busy) {  }#}
-{#        busy = true#}
-{#        $.ajax({#}
-{#        url: "works/",#}
-{#        type: "get",#}
-{#        success: function(data) {#}
-            {#$("#ajaxinjectimage").html(data);#}
-{#            console.log(data)#}
-{#            busy = false;#}
-{#        },#}
-{#        error: function(){#}
-{#            clearInterval(1)#}
-{#        }#}
-{#    });#}Ы
-{#}, 10000);#}
-{#</script>#}
 <div class="sidenav">
   <a href="/camerapage">Camera</a>
     <a href="/database">Database</a>
-{#  <a href="#">Clients</a>#}
+  <a href="/rewinddatabase">Rewind database</a>
 {#  <a href="#">Contact</a>#}
 </div>
 <div class="main">
-    <h1>Camera</h1>
-    <img src="http://127.0.0.1:8000/camera/" height="480" width="640">
-    <div class="ajaxinjectimage">
-
-    </div>
+    <ul class="ul-api">
+        {% for person in persons %}
+        <li class="li-api">
+            <div class="div-api">
+                <img src="{{ person.image.url }}" alt="None" width="240" height="320"/>
+                <p>{{person.name}}</p>
+                <p>{{person.isactive }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
 </div>
 </body>
 </html>

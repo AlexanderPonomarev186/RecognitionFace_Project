@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'serviceapp'
 ]
 
 MIDDLEWARE = [
@@ -79,9 +80,9 @@ import mongoengine
 mongoengine.connect("admin", 27017)
 DATABASES = {
     "default": {
-        "NAME": "postgres",
+        "NAME": "face_recog",
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "USER": "postgres",
+        "USER": "face_recoguser",
         "PASSWORD": "CasperTo360Flip",
         'HOST': 'localhost',
         'PORT': '5432',
@@ -123,8 +124,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
-
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static"),
+)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
