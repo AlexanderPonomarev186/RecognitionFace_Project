@@ -28,5 +28,6 @@ urlpatterns = [
     path("phonecamera/", views.phoneCamera),
     path("phonecamera/checkface/", views.checkFace),
     path("database/", views.database),
-    path("rewinddatabase/", views.rewinddatabase)
+    path("rewinddatabase/", views.rewinddatabase),
+    path('/', views.database)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
