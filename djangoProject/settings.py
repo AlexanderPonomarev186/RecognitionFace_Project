@@ -80,12 +80,13 @@ import mongoengine
 mongoengine.connect("admin", 27017)
 DATABASES = {
     "default": {
-        "NAME": "face_recog",
+        "NAME": "railway",
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "USER": "face_recoguser",
-        "PASSWORD": "CasperTo360Flip",
-        'HOST': 'localhost',
-        'PORT': '5432',
+        "URL":"postgresql://postgres:ABmQcXEdOOGP6WM6pBu2@containers-us-west-91.railway.app:6261/railway",
+        "USER": "postgres",
+        "PASSWORD": "ABmQcXEdOOGP6WM6pBu2",
+        'HOST': 'containers-us-west-91.railway.app',
+        'PORT': '6261',
     }
 }
 
