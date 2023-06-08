@@ -1,4 +1,4 @@
-FROM python:3.8.6-64bit
+FROM python:3.10.7
 WORKDIR /djangoProject/
 COPY requirements.txt /djangoProject/
 RUN pip install --upgrade pip && pip install -r requirements.txt
