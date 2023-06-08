@@ -76,17 +76,12 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-import mongoengine
-mongoengine.connect("admin", 27017)
+# import mongoengine
+# mongoengine.connect("admin", 27017)
 DATABASES = {
     "default": {
-        "NAME": "railway",
-        "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "USER": "postgres",
-        "PASSWORD": "7plKauMSrGjhR2HpLdtK",
-        'HOST': 'containers-us-west-41.railway.app',
-        'PORT': '5603',
-        "URL": "postgresql://postgres:7plKauMSrGjhR2HpLdtK@containers-us-west-41.railway.app:5603/railway",
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, 'db.sqlite3')
     }
 }
 
