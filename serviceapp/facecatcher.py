@@ -1,25 +1,23 @@
 import os
-
 import cv2
-import numpy
-from deepface.commons import realtime
 from serviceapp import modelapi
 from serviceapp.models import Person
+from serviceapp.deepfaceapi import initializatedb
 
 def rewindEmbeddings():
     try:
         os.remove("media/representations_facenet512.pkl")
-        modelapi.initializate("media", model_name="Facenet512", detector_backend="retinaface",
+        modelapi.initializate("media", model_name="Facenet512", detector_backend="opencv",
                           distance_metric="euclidean",
                           enable_face_analysis=False, time_threshold=1, frame_threshold=1)
     except:
-        modelapi.initializate("media", model_name="Facenet512", detector_backend="retinaface",
+        modelapi.initializate("media", model_name="Facenet512", detector_backend="opencv",
                               distance_metric="euclidean",
                               enable_face_analysis=False, time_threshold=1, frame_threshold=1)
 
 def facecatch(image):
     try:
-        status, person = modelapi.analysis("media", image, model_name="Facenet512", detector_backend="retinaface",
+        status, person = modelapi.analysis("media", image, model_name="Facenet512", detector_backend="opencv",
                                            distance_metric="euclidean",
                                            enable_face_analysis=False, time_threshold=1, frame_threshold=1)
         if status:

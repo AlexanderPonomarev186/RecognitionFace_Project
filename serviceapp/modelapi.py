@@ -3,8 +3,10 @@ import time
 import numpy as np
 import pandas as pd
 import cv2
+from serviceapp import deepfaceapi
 from deepface import DeepFace
 from deepface.commons import functions
+from serviceapp.deepfaceapi import initializatedb
 
 # dependency configuration
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "2"
@@ -32,26 +34,19 @@ def initializate(
     # ------------------------
     # build models once to store them in the memory
     # otherwise, they will be built after cam started and this will cause delays
-    DeepFace.build_model(model_name=model_name)
+    deepfaceapi.build_model(model_name=model_name)
     print(f"facial recognition model {model_name} is just built")
 
-    if enable_face_analysis:
-        DeepFace.build_model(model_name="Age")
-        print("Age model is just built")
-        DeepFace.build_model(model_name="Gender")
-        print("Gender model is just built")
-        DeepFace.build_model(model_name="Emotion")
-        print("Emotion model is just built")
+    # if enable_face_analysis:
+    #     DeepFace.build_model(model_name="Age")
+    #     print("Age model is just built")
+    #     DeepFace.build_model(model_name="Gender")
+    #     print("Gender model is just built")
+    #     DeepFace.build_model(model_name="Emotion")
+    #     print("Emotion model is just built")
     # -----------------------
     # call a dummy find function for db_path once to create embeddings in the initialization
-    DeepFace.find(
-        img_path=np.zeros([224, 224, 3]),
-        db_path=db_path,
-        model_name=model_name,
-        detector_backend=detector_backend,
-        distance_metric=distance_metric,
-        enforce_detection=False,
-    )
+    initializatedb(db_path="media", model_name="Facenet512", detector_backend="retinaface", enforce_detection=False)
 
 def analysis(
     db_path,
@@ -89,7 +84,7 @@ def analysis(
     if freeze == False:
         try:
             # just extract the regions to highlight in webcam
-            face_objs = DeepFace.extract_faces(
+            face_objs = deepfaceapi.extract_faces(
                 img_path=img,
                 target_size=target_size,
                 detector_backend=detector_backend,
@@ -186,7 +181,7 @@ def analysis(
 
                     if enable_face_analysis == True:
 
-                        demographies = DeepFace.analyze(
+                        demographies = deepfaceapi.analyze(
                             img_path=custom_face,
                             detector_backend=detector_backend,
                             enforce_detection=False,
@@ -419,7 +414,7 @@ def analysis(
                     # face recognition
                     # call find function for custom_face
 
-                    dfs = DeepFace.find(
+                    dfs = deepfaceapi.find(
                         img_path=custom_face,
                         db_path=db_path,
                         model_name=model_name,

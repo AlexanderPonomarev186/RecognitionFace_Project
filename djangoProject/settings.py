@@ -76,12 +76,18 @@ WSGI_APPLICATION = 'djangoProject.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# import mongoengine
-# mongoengine.connect("admin", 27017)
+from mongoengine import *
+
+connect("admin")
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, 'db.sqlite3')
+        "NAME": "face_recog",
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "USER": "postgres",
+        "PASSWORD": "CasperTo360Flip",
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
